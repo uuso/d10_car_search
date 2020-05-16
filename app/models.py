@@ -7,8 +7,8 @@ def random_color():
 
 
 class Car(models.Model):
-    vendor = models.CharField(max_length=20)
-    model = models.CharField(max_length=20)
+    vendor = models.CharField(max_length=40)
+    model = models.CharField(max_length=40)
     year = models.SmallIntegerField()
     GEARBOX = (
         (0, "механика"),
