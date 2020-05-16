@@ -1,0 +1,6 @@
+{
+  "name": "Car List App",
+  "description": "Some car app to practice in django ORM and GET-queries",
+  "image": "heroku/python",
+  "keywords": ["python", "django" ]
+}

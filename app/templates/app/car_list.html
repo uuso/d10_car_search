@@ -1,0 +1,115 @@
+{% load extratags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>cars list</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<div class="row my-5">
+			<div class="col-4">
+				<h4>Применить фильтр<sup><a href="/">&times;</a></sup></h4>
+
+				<form method="get">
+					<div class="form-group">
+						<label for="vendorSelect">По производителям:</label>
+						<select name="vendor" multiple class="form-control" size="7" id="vendorSelect">                            
+							{% for vendor_item in vendor_list %}<option {% if vendor_item in request.GET.vendor %} selected {% endif %}>{{ vendor_item }}</option>{% endfor %}                            
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="modelSelect">Модель:</label><br>
+						<input class="w-100" type="text" name="model" id="modelSelect" placeholder="Модель или фрагмент названия">
+					</div>
+					<div class="form-group">
+						<label for="gearboxSelect">По типу КПП:</label>
+						<select name="gearbox" size=3 multiple class="form-control" id="gearboxSelect">
+							<option value="0">механика</option>
+							<option value="1">автомат</option>
+							<option value="2">робот</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="yearSelect">По году производства:</label><br>
+						{% comment %} <input class="w-100" type="number" name="year" id="yearSelect" min={{ year_range.year__min }} max={{ year_range.year__max }}> {% endcomment %}
+						<input type="text" class="w-100" name="year" id="yearSelect" placeholder="Например, 1998 или 1975, 1961">
+					</div>
+					<div class="form-group">
+					<label>По цвету:</label><br>
+						{% for color in colors %}
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="cb_{{ color.name }}" name="color" value="{{ color.name }}">
+							<label class="form-check-label" for="cb_{{ color.name }}">
+							<span class="badge" style="background-color: {{ color.web }}; border: 1px solid black">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span >
+							</label>
+						</div>
+						{% endfor %}
+					</div>
+
+
+					<input type="submit" value="Применить">                    
+				
+				</form>
+
+
+
+
+			</div>
+			<div class="col-8">
+				<h2 class="mb-4 text-center">База автомобилей</h2>
+
+				{% if car_list %}
+				<table class="table table-sm table-hover text-center">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col">Производитель</th>
+							<th scope="col">Модель</th>
+							<th scope="col">Год выпуска</th>
+							<th scope="col">Тип КПП</th>
+							<th scope="col">Цвет</th>
+							<th scope="col">&lt;filtered_as&gt;</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for car in car_list %}
+						<tr>
+							<td>{{ car.vendor }}</td>
+							<td>{{ car.model }}</td>
+							<td>{{ car.year }}</td>
+							<td>{{ car.get_gearbox_display }}</td>
+							<td><span class="badge" style="background-color: {{ car.web_color }};" title="{{ car.web_color }}">&nbsp;&nbsp;&nbsp;</span ></td>
+							<td><span class="badge" style="background-color: {{ car.color | nearest_color }};" title="{{ car.color | nearest_color }}">&nbsp;&nbsp;&nbsp;</span ></td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+
+				<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">                    
+					<li class="page-item"><a class="page-link" href="?{% url_replace page=1 %}">First</a></li>
+
+					{% for page_num in page_list %}
+					{% if page_num == page_obj.number %}
+					<li class="page-item active">
+					{% else %}
+					<li class="page-item">
+					{% endif %}
+					<a class="page-link" href="?{% url_replace page=page_num %}">{{ page_num }}</a></li>
+					{% endfor %}
+
+					<li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}">Last</a></li>                    
+				</ul>
+				</nav>
+
+				{% else %}
+				<h3>Поиск не дал результатов либо база автомобилей пуста.</h3>
+				{% endif %}            
+			</div>
+		</div>
+	</div>
+</body>
+</html>
