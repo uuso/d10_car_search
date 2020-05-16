@@ -15,7 +15,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', "secret_key here")
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-# INTERNAL_IPS = ['127.0.0.1', ]
+INTERNAL_IPS = ['8.8.8.8', ]
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'app.views.truefunc',
+}
 
 # Application definition
 

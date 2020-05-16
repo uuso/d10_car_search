@@ -4,6 +4,10 @@ from django.views.generic import ListView
 from .models import Car
 from .colors import color_palette, rgb_to_web
 
+# функция для отображения django_debug_toolbox у всех
+def truefunc(*args, **kwargs): return True
+
+
 
 class CarsList(ListView):
     # model = Car
