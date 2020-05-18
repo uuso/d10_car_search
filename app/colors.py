@@ -15,10 +15,16 @@ color_palette = {
     'magenta': 0xFF00FF,
     'yellow': 0xFFFF00
 }
-color_palette_invert = { value: key for key, value in color_palette.items() }
-
 def rgb_to_web(rgb):
     return "#{:0>6}".format(hex(rgb)[2:].upper())
+
+
+
+
+
+
+
+# изначально сделал со случайными цветами от 0 до 0xFFFFFF, работало но неле ворочалось при фильтрации
 
 def rgb_tuple(rgb_value, as_float=True):
     int_tuple = (

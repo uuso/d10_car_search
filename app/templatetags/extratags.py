@@ -1,6 +1,6 @@
 import urllib
 from django import template
-from app.colors import nearest
+from app.colors import nearest, rgb_to_web, color_palette
 
 register = template.Library()
 
@@ -34,6 +34,14 @@ def mark_selected(context, **kwargs):
         if key in query and value in query.getlist(key):
             return 'selected'
 
+# @register.filter
+# def nearest_color(color):
+#     return nearest(color)['color']['web']
+
 @register.filter
-def nearest_color(color):
-    return nearest(color)['color']['web']
+def name_to_web(color):
+    return rgb_to_web(color_palette[color])
+
+@register.filter
+def web_color(color):
+    return rgb_to_web(color)

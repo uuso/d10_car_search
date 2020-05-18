@@ -1,4 +1,4 @@
-import django_heroku
+# import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -99,4 +99,4 @@ STATIC_ROOT = 'static/'
 MEDIA_URL = '/MEDIA/'
 MEDIA_ROOT = 'MEDIA/'
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

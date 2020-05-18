@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row my-5">
+		<div class="row mt-5">
 			<div class="col-4">
 				<h4>Применить фильтр<sup><a href="/">&times;</a></sup></h4>
 
@@ -34,8 +34,7 @@
 					</div>
 					<div class="form-group">
 						<label for="yearSelect">По году производства:</label><br>
-						{% comment %} <input class="w-100" type="number" name="year" id="yearSelect" min={{ year_range.year__min }} max={{ year_range.year__max }}> {% endcomment %}
-						<input type="text" class="w-100" name="year" id="yearSelect" placeholder="Например, 1998 или 1975, 1961">
+						<input type="text" class="w-100" name="year" id="yearSelect" placeholder="Например, 1975, 1961">
 					</div>
 					<div class="form-group">
 					<label>По цвету:</label><br>
@@ -71,7 +70,6 @@
 							<th scope="col">Год выпуска</th>
 							<th scope="col">Тип КПП</th>
 							<th scope="col">Цвет</th>
-							<th scope="col">&lt;filtered_as&gt;</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -81,8 +79,7 @@
 							<td>{{ car.model }}</td>
 							<td>{{ car.year }}</td>
 							<td>{{ car.get_gearbox_display }}</td>
-							<td><span class="badge" style="background-color: {{ car.web_color }};" title="{{ car.web_color }}">&nbsp;&nbsp;&nbsp;</span ></td>
-							<td><span class="badge" style="background-color: {{ car.color | nearest_color }};" title="{{ car.color | nearest_color }}">&nbsp;&nbsp;&nbsp;</span ></td>
+							<td><span class="badge" style="background-color: {{ car.color | name_to_web }};" title="{{ car.color }}">&nbsp;&nbsp;&nbsp;</span ></td>
 						</tr>
 					{% endfor %}
 					</tbody>
